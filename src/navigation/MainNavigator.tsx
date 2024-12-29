@@ -1,11 +1,11 @@
 import React from 'react';
-
 import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
-import { MapScreen } from '../features/Map/screens';
+import {NavigationContainer} from '@react-navigation/native';
+import {MapScreen} from '../features/Map/screens';
+import {SCREEN_NAMES} from '../constants';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,10 +17,10 @@ const MainNavigator: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={screenOptions}>
-        <Stack.Screen name="Home" component={MapScreen} options={{ title: 'Welcome' }} />
+        <Stack.Screen name={SCREEN_NAMES.MAP_SCREEN} component={MapScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
-export { MainNavigator };
+export {MainNavigator};

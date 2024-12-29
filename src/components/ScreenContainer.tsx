@@ -1,16 +1,17 @@
-import React, { ReactNode } from 'react';
-import { SafeAreaView, StatusBar, useColorScheme } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import React, {ReactNode} from 'react';
+import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 interface ScreenContainerProps {
   children: ReactNode;
 }
 
-const ScreenContainer: React.FC<ScreenContainerProps> = ({ children }) => {
+const ScreenContainer: React.FC<ScreenContainerProps> = ({children}) => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    flex: 1,
   };
 
   return (
@@ -24,4 +25,4 @@ const ScreenContainer: React.FC<ScreenContainerProps> = ({ children }) => {
   );
 };
 
-export { ScreenContainer };
+export {ScreenContainer};
