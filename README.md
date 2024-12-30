@@ -1,4 +1,10 @@
+# Tesla Errand Map App
+
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+
+# Description
+
+The project stimulates the behavior of a tesla running and errand sending live updates on the maps.
 
 # Getting Started
 
@@ -11,71 +17,64 @@ First, you will need to start **Metro**, the JavaScript _bundler_ that ships _wi
 To start Metro, run the following command from the _root_ of your React Native project:
 
 ```bash
-# using npm
-npm start
-
-# OR using Yarn
+# using Yarn
 yarn start
 ```
 
 ## Step 2: Start your Application
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
-
-```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
+Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _iOS_ app:
 
 ### For iOS
 
 ```bash
-# using npm
-npm run ios
 
-# OR using Yarn
+# using Yarn
+yarn install
+cd ios && pod install
+
+# from root folder
 yarn ios
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+If everything is set up _correctly_, you should see your new app running in your _iOS Simulator_ shortly provided you have set up your simulator correctly.
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+This is one way to run your app — you can also run it directly from within Xcode.
 
-## Step 3: Modifying your App
+# Architecture
 
-Now that you have successfully run the app, let's modify it.
+The project architecture is a mixture of feature-first and layer-first, combining the best of both worlds. The benefits are as follows:
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+- Clean and organized code.
+- Seperation of concerns.
+- Modular approach as well as having common layers to share.
+- Easily scalable.
+- Easier to maintain in a larger team.
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+The components are created keeping in mind the KISS rule which I believe to be the best approach, Keep It Simple and Stupid.
+Anyone can understand the codebase easily, if there's something that can be done in a simpler way, let it be.
 
-## Congratulations! :tada:
+# Networking
 
-You've successfully run and modified your React Native App. :partying_face:
+- MockAPI doesn't provide to change the response to our desired data, I resorted to local server setup using _json-server_ and _mock-socket_ for API calls and socket connection but simulator can't connect with localhost and another option would be to use _ngrok_ or _docker_ so I resorted to MockAPI.
+- Since MockAPI has limited free calls available so I also added the ability to run it on dummy data which can be enabled or disabled from the .env _DUMMY_MODE_ flag.
+- If you wish to see it perform via API calls, replace the MOCKAPI*KEY with your secret and disable \_DUMMY_MODE* .
 
-### Now what?
+# ENV
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+Create an .env file in the root of the project as copy/paste the values provided below.
+
+```bash
+API_URL=https://api.mockapi.com/api/v1/vehicle
+WEBSOCKET_URL=ws://localhost:5000
+MOCKAPI_KEY=92a4fb3f3f6f447eae009bdfdd3e9c91
+DUMMY_MODE=true
+```
 
 # Troubleshooting
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+If you can't get this to work, try building your project from xcode.
 
-# Learn More
+# Author
 
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
-
-# tesla-errand-app
+- [numanqmr](https://github.com/numanqmr)
