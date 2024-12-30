@@ -1,17 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {ScreenContainer} from '../../../components';
 import MapComponent from './MapComponent';
 import useVehicleLocation, {Coordinates} from '../hooks/useVehicleLocation';
 import useVehicleLocationSubscription from '../hooks/useVehicleLocationSubscription';
+import {ContainerScreen} from '../../../components';
 
 const MapScreen: React.FC = () => {
-  const defaultLocation = {
-    latitude: 37.7749,
-    longitude: -122.4194,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  };
-
   const {
     error: initialDataError,
     data: initialData,
@@ -24,36 +17,47 @@ const MapScreen: React.FC = () => {
     startPolling,
     stopPolling,
   } = useVehicleLocationSubscription();
-  const [coordinates, setCoordinates] = useState<Coordinates>(defaultLocation);
+
+  const [coordinates, setCoordinates] = useState<Coordinates>({
+    latitude: 37.7749,
+    longitude: -122.4194,
+    latitudeDelta: 0.1922,
+    longitudeDelta: 0.1421,
+  });
+
+  const isDummyMode = (process.env.DUMMY_MODE || false) as boolean;
 
   useEffect(() => {
     if (initialData) {
       setCoordinates(prev => {
-        return {...prev, ...initialData};
+        return {
+          ...prev,
+          ...{latitude: initialData.latitude, longitude: initialData.longitude},
+        };
       });
-
-      //start data subscription
+      //start subscription
       startPolling();
     }
 
+    // start polling from dummy more
+    if (isDummyMode) startPolling();
+
     () => {
       //subscription cleanup
-      startPolling();
+      stopPolling();
     };
   }, []);
 
   useEffect(() => {
     if (subscriptionData) {
-      setCoordinates(prev => {
-        return {...prev, ...subscriptionData};
-      });
+      setCoordinates(subscriptionData);
     }
-  }, []);
+  }, [subscriptionData]);
 
   return (
-    <ScreenContainer>
-      <MapComponent coordinates={coordinates} title="You" />
-    </ScreenContainer>
+    <ContainerScreen>
+      <MapComponent coordinates={coordinates} title="Tesla" />
+    </ContainerScreen>
   );
 };
 

@@ -5,13 +5,13 @@ export const axiosService: AxiosInstance = axios.create({
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',
-    'x-api-key': '92a4fb3f3f6f447eae009bdfdd3e9c91',
+    'x-api-key': process.env.MOCKAPI_KEY,
   },
 });
 
 axiosService.interceptors.request.use(
   config => {
-    console.log('Request:', config);
+    //console.log('Request:', config);
     return config;
   },
   error => {

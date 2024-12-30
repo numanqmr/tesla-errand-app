@@ -2,11 +2,11 @@ import React, {ReactNode} from 'react';
 import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
-interface ScreenContainerProps {
+interface ContainerScreenProps {
   children: ReactNode;
 }
 
-const ScreenContainer: React.FC<ScreenContainerProps> = ({children}) => {
+const ContainerScreen: React.FC<ContainerScreenProps> = ({children}) => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -25,4 +25,4 @@ const ScreenContainer: React.FC<ScreenContainerProps> = ({children}) => {
   );
 };
 
-export {ScreenContainer};
+export {ContainerScreen};

@@ -1,5 +1,6 @@
-import {useState, useEffect, useCallback, useRef} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import {getLocationUpdates} from '../service';
+import {generateRandomCoordinates} from '../utils/dummyCoordinatesHelper';
 
 export type Coordinates = {
   latitude: number;
@@ -12,26 +13,30 @@ const useVehicleLocationSubscription = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Object | null>(null);
   const [data, setData] = useState<Coordinates | null>(null);
-  const intervalId = useRef<NodeJS.Timeout | null>(null);
 
-  const fetchLocation = useCallback(async () => {
+  const intervalId = useRef<NodeJS.Timeout | null>(null);
+  const isDummyMode = (process.env.DUMMY_MODE || false) as boolean;
+
+  const fetchUpdates = async () => {
     try {
       setLoading(true);
       setError(null);
-      const locationData = await getLocationUpdates();
+      const locationData = isDummyMode
+        ? generateRandomCoordinates()
+        : await getLocationUpdates();
       setData(locationData);
       setLoading(false);
     } catch (error) {
-      setError(error || 'Error fetching vehicle location');
+      setError(error || 'Error fetching vehicle updates');
       setLoading(false);
     }
-  }, []);
+  };
 
   const startPolling = () => {
     if (intervalId.current) return;
     intervalId.current = setInterval(() => {
-      fetchLocation();
-    }, 2500);
+      fetchUpdates();
+    }, 3000);
   };
 
   const stopPolling = () => {
@@ -44,7 +49,7 @@ const useVehicleLocationSubscription = () => {
   useEffect(() => {
     startPolling();
     return () => stopPolling();
-  }, [fetchLocation]);
+  }, [fetchUpdates]);
 
   return {
     loading,
